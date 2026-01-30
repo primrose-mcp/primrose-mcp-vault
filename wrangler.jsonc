@@ -1,0 +1,54 @@
+{
+  // ==========================================================================
+  // HashiCorp Vault MCP Server - Wrangler Configuration
+  // ==========================================================================
+  //
+  // MULTI-TENANT ARCHITECTURE:
+  // This server supports multiple tenants. Credentials are passed via request
+  // headers, NOT stored as wrangler secrets. This allows a single deployment
+  // to serve multiple customers.
+  //
+  // Required Headers:
+  //   X-Vault-Token: Vault authentication token
+  //   X-Vault-Address: Vault server address (e.g., https://vault.example.com)
+  // ==========================================================================
+
+  "name": "primrose-mcp-vault",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-12-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // ==========================================================================
+  // Environment Variables (server-wide configuration, not per-tenant)
+  // ==========================================================================
+  "vars": {
+    "CHARACTER_LIMIT": "50000",
+    "DEFAULT_PAGE_SIZE": "20",
+    "MAX_PAGE_SIZE": "100"
+  },
+
+  // ==========================================================================
+  // Multi-Tenant Authentication (via Request Headers)
+  // ==========================================================================
+  //
+  // Tenant credentials are passed via HTTP headers on each request:
+  //
+  // Required:
+  //   X-Vault-Token: Vault authentication token
+  //   X-Vault-Address: Vault server address (e.g., https://vault.example.com)
+  //
+  // Optional:
+  //   X-Vault-Namespace: Vault namespace (Enterprise feature)
+
+  // ==========================================================================
+  // Development
+  // ==========================================================================
+  "dev": {
+    "port": 8787,
+    "local_protocol": "http"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
